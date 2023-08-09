@@ -1,11 +1,12 @@
 """Armor """
 armored = False
 
-def armor():
+def armor(y):
     armored = True
+    timer = y - 4
     if armored:
-        pass
         # change car images
+
 
 
 

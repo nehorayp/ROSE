@@ -6,7 +6,7 @@ Coded by: Nehoray Peretz, Itzhack Bonan, Or Sahray, Shani Diyomin
 driver_name = "N.O.I.S"  # N.O.I.S - Nehoray, Or, Itzhak, Shani
 
 good_obstacles = [obstacles.PENGUIN, obstacles.WATER, obstacles.CRACK]
-bad_obstacles = [obstacles.TRASH, obstacles.BIKE, obstacles.BARRIER]
+bad_ob stacles = [obstacles.TRASH, obstacles.BIKE, obstacles.BARRIER]
 actions_for_obs = {
     obstacles.PENGUIN: actions.PICKUP,
     obstacles.WATER: actions.BRAKE,

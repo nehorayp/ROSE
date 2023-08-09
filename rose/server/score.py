@@ -64,18 +64,21 @@ def process(players, track):
                 player.score += config.score_move_forward
         elif obstacle == obstacles.MYSTERY:
             if player.action == actions.PICKUP:
-                reword = chose_op()
-                if reword == "armor":
-                    armor()
-                elif reword == "change":
-                    new_place = change()
-
-                elif reword == "confusion":
-                    pass
-                elif reword == "double":
-                    pass
-
-
+                track.clear(player.x, player.y)
+                player.score += config.score_move_forward
+                # reward = chose_op()
+                # if reward == "armor":
+                #
+                # elif reward == "change":
+                #     new_place = change()
+                #     player.x = new_place[0]
+                #     player.y = new_place[1]
+                # elif reward == "confusion":
+                #     pass
+                # elif reward == "double":
+                #     pass
+                #
+                #
 
 
 
