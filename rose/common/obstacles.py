@@ -9,6 +9,7 @@ PENGUIN = "penguin"  # NOQA
 BIKE    = "bike"     # NOQA
 WATER   = "water"    # NOQA
 BARRIER = "barrier"  # NOQA
+MYSTERY = "mystery"  # NOQA
 
 ALL = (NONE, CRACK, TRASH, PENGUIN, BIKE, WATER, BARRIER)
 

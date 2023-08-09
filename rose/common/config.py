@@ -42,6 +42,9 @@ score_move_backward = -10
 score_jump = 5
 score_brake = 4
 
+
+# Mystery times
+mystery_obstacle_time = 4
 # Logging
 
 logger_format = ("%(asctime)s %(levelname)-7s [%(name)s] %(message)s "

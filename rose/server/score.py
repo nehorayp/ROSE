@@ -4,6 +4,7 @@ import logging
 import six
 
 from rose.common import actions, config, obstacles
+from mystery import *
 
 log = logging.getLogger('score')
 
@@ -61,6 +62,24 @@ def process(players, track):
             if player.action == actions.PICKUP:
                 track.clear(player.x, player.y)
                 player.score += config.score_move_forward
+        elif obstacle == obstacles.MYSTERY:
+            if player.action == actions.PICKUP:
+                reword = chose_op()
+                if reword == "armor":
+                    armor()
+                elif reword == "change":
+                    new_place = change()
+
+                elif reword == "confusion":
+                    pass
+                elif reword == "double":
+                    pass
+
+
+
+
+
+
 
         # Here we can end the game when player gets out of
         # the track bounds. For now, just keep the player at the same
