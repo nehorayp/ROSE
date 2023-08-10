@@ -285,8 +285,8 @@ var ROSE = (function() {
         loader.load("res/obstacles/water.png", function(img) {
             self.textures["water"] = img;
         });
-        loader.load("res/obstacles/crack.png", function(img) {
-            self.textures["crack"] = img;
+        loader.load("res/obstacles/2XCoin.png", function(img) {
+            self.textures["mystery"] = img;
         });
 
     }

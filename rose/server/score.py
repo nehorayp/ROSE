@@ -1,10 +1,11 @@
 """ Score logic """
 import logging
-
+import random
 import six
 
-from rose.common import actions, config, obstacles
-from mystery import *
+from rose.common import actions, config, obstacles, mystery
+from rose.server import track
+from mystery.change import change
 
 log = logging.getLogger('score')
 
@@ -64,25 +65,52 @@ def process(players, track):
                 player.score += config.score_move_forward
         elif obstacle == obstacles.MYSTERY:
             if player.action == actions.PICKUP:
+                print(player.y)
                 track.clear(player.x, player.y)
-                player.score += config.score_move_forward
-                # reward = chose_op()
-                # if reward == "armor":
-                #
-                # elif reward == "change":
-                #     new_place = change()
-                #     player.x = new_place[0]
-                #     player.y = new_place[1]
-                # elif reward == "confusion":
-                #     pass
-                # elif reward == "double":
-                #     pass
-                #
-                #
-
-
-
-
+                reward = mystery.get_random_reward()
+                print(reward)
+                if reward == "armor":
+                    mystery.activate_armor(player)
+                elif reward == "change":
+                    new_place = change()
+                    player.x = new_place[0]
+                    player.y = new_place[1]
+                elif reward == "confusion":
+                    if player.x >= 3:
+                        x_target = 1
+                    else:
+                        x_target = 4
+                    try:
+                        matrix = [[track.get(x_target - 1, player.y - 1), track.get(x_target, player.y - 1),
+                                   track.get(x_target + 1, player.y - 1)],
+                                  [track.get(x_target - 1, player.y - 2), track.get(x_target, player.y - 2),
+                                   track.get(x_target + 1, player.y - 2)],
+                                  [track.get(x_target - 1, player.y - 3), track.get(x_target, player.y - 3),
+                                   track.get(x_target + 1, player.y - 3)]]
+                    except IndexError:
+                        if player.x - 3 < 0:
+                            matrix = [
+                                [None, track.get(x_target, player.y - 1), track.get(x_target + 1, player.y - 1)],
+                                [None, track.get(x_target, player.y - 2), track.get(x_target + 1, player.y - 2)],
+                                [None, track.get(x_target, player.y - 3), track.get(x_target + 1, player.y - 3)]]
+                        else:
+                            matrix = [
+                                [track.get(x_target - 1, player.y - 1), track.get(x_target, player.y - 1), None],
+                                [track.get(x_target - 1, player.y - 2), track.get(x_target, player.y - 2), None],
+                                [track.get(x_target - 1, player.y - 3), track.get(x_target, player.y - 3), None]]
+                    my_track = [[(x_target - 1, player.y - 1), (x_target, player.y - 1), (x_target + 1, player.y - 1)],
+                                [(x_target - 1, player.y - 2), (x_target, player.y - 2), (x_target + 1, player.y - 2)],
+                                [(x_target - 1, player.y - 3), (x_target, player.y - 3), (x_target + 1, player.y - 3)]]
+                    obs = [obstacles.CRACK, obstacles.TRASH, obstacles.BIKE, obstacles.WATER
+                        , obstacles.BARRIER, obstacles.MYSTERY]
+                    print(matrix)
+                    for i in range(3):
+                        for j in range(3):
+                            if matrix[i][j] is not None and matrix[i][j] != actions.NONE:
+                                new_obs = random.choice(obs)
+                                track.set(my_track[i][j][0], my_track[i][j][1], new_obs)
+                elif reward == "double":
+                    pass
 
         # Here we can end the game when player gets out of
         # the track bounds. For now, just keep the player at the same

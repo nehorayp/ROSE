@@ -5,12 +5,13 @@ Coded by: Nehoray Peretz, Itzhack Bonan, Or Sahray, Shani Diyomin
 """
 driver_name = "N.O.I.S"  # N.O.I.S - Nehoray, Or, Itzhak, Shani
 
-good_obstacles = [obstacles.PENGUIN, obstacles.WATER, obstacles.CRACK]
-bad_ob stacles = [obstacles.TRASH, obstacles.BIKE, obstacles.BARRIER]
+good_obstacles = [obstacles.PENGUIN, obstacles.WATER, obstacles.CRACK, obstacles.MYSTERY]
+bad_obstacles = [obstacles.TRASH, obstacles.BIKE, obstacles.BARRIER]
 actions_for_obs = {
     obstacles.PENGUIN: actions.PICKUP,
     obstacles.WATER: actions.BRAKE,
-    obstacles.CRACK: actions.JUMP
+    obstacles.CRACK: actions.JUMP,
+    obstacles.MYSTERY: actions.PICKUP
 }
 
 
@@ -25,7 +26,11 @@ def encounter_obstacle_forward(x, y, world):
         return actions.RIGHT
     elif x == 2 or x == 5:  # Check out of range left
         return actions.LEFT
-    if world.get((x+1, y-2)) == obstacles.PENGUIN:
+    if world.get((x+1, y-2)) == obstacles.MYSTERY:
+        return actions.RIGHT
+    elif world.get((x-1, y-2)) == obstacles.MYSTERY:
+        return actions.LEFT
+    elif world.get((x+1, y-2)) == obstacles.PENGUIN:
         return actions.RIGHT
     elif world.get((x-1, y-2)) == obstacles.PENGUIN:
         return actions.LEFT
@@ -59,7 +64,11 @@ def no_obstacle_forward(x, y, world):
         else:
             return actions.NONE
     else:
-        if world.get((x+1, y-2)) == obstacles.PENGUIN:
+        if world.get((x+1, y-2)) == obstacles.MYSTERY:
+            return actions.RIGHT
+        elif world.get((x-1, y-2)) == obstacles.MYSTERY:
+            return actions.LEFT
+        elif world.get((x+1, y-2)) == obstacles.PENGUIN:
             return actions.RIGHT
         elif world.get((x-1, y-2)) == obstacles.PENGUIN:
             return actions.LEFT

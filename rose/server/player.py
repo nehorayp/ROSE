@@ -13,6 +13,8 @@ class Player(object):
         self.response_time = None
         self.score = None
         self.reset()
+        self.has_armor = False
+        self.armor_frames = 8
 
     # Game state interface
 
@@ -21,7 +23,7 @@ class Player(object):
 
     def reset(self):
         self.x = self.lane * config.cells_per_player + 1  # | |0| | |1 | |
-        self.y = config.matrix_height // 3 * 2             # 1/3 of track
+        self.y = config.matrix_height // 3 * 2  # 1/3 of track
         self.action = actions.NONE
         self.response_time = 1.0
         self.score = 0
@@ -47,3 +49,16 @@ class Player(object):
                 'y': self.y,
                 'lane': self.lane,
                 'score': self.score}
+
+    def get_armor_status(self):
+        return self.has_armor
+
+    def set_place(self, x, y):
+        self.x = x
+        self.y = y
+
+    def active_armor(self):
+        self.has_armor = True
+
+    def deactivate_armor(self):
+        self.has_armor = False

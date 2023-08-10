@@ -114,7 +114,15 @@ class Game(object):
 
     def loop(self):
         self.track.update()
+        for p in six.itervalues(self.players):
+            if p.has_armor:
+                p.armor_frames -= 1
+                if p.armor_frames <= 0:
+                    p.has_armor = False
+                    p.armor_frames = 0
+                    print("Armor Deactivated")
         score.process(self.players, self.track)
+
         if self.timeleft > 0:
             self.update_clients()
             self.timeleft -= 1
